@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define a structure for a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to insert a new node at the beginning of the linked list
+void insertAtBeginning(struct Node** head_ref, int new_data) {
+    // Allocate memory for new node
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    // Assign data to the new node
+    new_node->data = new_data;
+    // Set the next of new node as current head
+    new_node->next = *head_ref;
+    // Move the head to point to the new node
+    *head_ref = new_node;
+}
+
+// Function to insert a new node at the end of the linked list
+void insertAtEnd(struct Node** head_ref, int new_data) {
+    // Allocate memory for new node
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    // Assign data to the new node
+    new_node->data = new_data;
+    // Set the next of new node as NULL since it will be the last node
+    new_node->next = NULL;
+
+    // If the linked list is empty, make the new node as head
+    if (*head_ref == NULL) {
+        *head_ref = new_node;
+        return;
+    }
+
+    // Else, traverse to the last node and append the new node
+    struct Node* last = *head_ref;
+    while (last->next != NULL) {
+        last = last->next;
+    }
+    last->next = new_node;
+}
+
+// Function to display the contents of the linked list
+void displayList(struct Node* head) {
+    struct Node* temp = head;
+    printf("Linked List: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct Node* head = NULL; // Initialize an empty linked list
+
+    // Inserting elements at the beginning
+    insertAtBeginning(&head, 10);
+    insertAtBeginning(&head, 20);
+    insertAtBeginning(&head, 30);
+    displayList(head);
+
+    // Inserting elements at the end
+    insertAtEnd(&head, 40);
+    insertAtEnd(&head, 50);
+    displayList(head);
+
+    return 0;
+}
