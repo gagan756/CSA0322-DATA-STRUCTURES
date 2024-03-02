@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+// Function to display elements of the array
+void display(int arr[], int size) {
+    printf("Array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Function to insert an element into the array
+int insert(int arr[], int *size, int element, int position) {
+    if (*size >= MAX_SIZE) {
+        printf("Array is full. Cannot insert element.\n");
+        return -1; // Indicates failure
+    }
+
+    if (position < 0 || position > *size) {
+        printf("Invalid position to insert element.\n");
+        return -1; // Indicates failure
+    }
+
+    // Shift elements to the right to make space for the new element
+    for (int i = *size - 1; i >= position; i--) {
+        arr[i + 1] = arr[i];
+    }
+
+    // Insert the new element
+    arr[position] = element;
+    (*size)++;
+
+    return 0; // Indicates success
+}
+
+// Function to delete an element from the array
+int delete(int arr[], int *size, int position) {
+    if (*size <= 0) {
+        printf("Array is empty. Cannot delete element.\n");
+        return -1; // Indicates failure
+    }
+
+    if (position < 0 || position >= *size) {
+        printf("Invalid position to delete element.\n");
+        return -1; // Indicates failure
+    }
+
+    // Shift elements to the left to fill the gap created by the deleted element
+    for (int i = position; i < *size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    (*size)--;
+
+    return 0; // Indicates success
+}
+
+int main() {
+    int arr[MAX_SIZE];
+    int size = 0;
+
+    // Inserting elements
+    insert(arr, &size, 10, 0);
+    insert(arr, &size, 20, 1);
+    insert(arr, &size, 30, 2);
+
+    // Displaying elements
+    display(arr, size);
+
+    // Deleting element at position 1
+    delete(arr, &size, 1);
+
+    // Displaying elements after deletion
+    display(arr, size);
+
+    return 0;
+}
