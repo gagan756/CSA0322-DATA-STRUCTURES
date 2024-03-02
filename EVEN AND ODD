@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+void checkOddEven(int numbers[], int size) {
+    printf("Number\t\tOdd/Even\n");
+    printf("------------------------\n");
+    for (int i = 0; i < size; i++) {
+        if (numbers[i] % 2 == 0)
+            printf("%d\t\tEven\n", numbers[i]);
+        else
+            printf("%d\t\tOdd\n", numbers[i]);
+    }
+}
+
+int main() {
+    int numbers[] = {10, 7, 25, 18, 13, 16};
+    int size = sizeof(numbers) / sizeof(numbers[0]);
+
+    checkOddEven(numbers, size);
+
+    return 0;
+}
