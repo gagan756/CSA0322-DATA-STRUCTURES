@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+// Define structure for stack
+struct Stack {
+    int items[MAX_SIZE];
+    int top;
+};
+
+// Function to initialize stack
+void initialize(struct Stack *s) {
+    s->top = -1;
+}
+
+// Function to check if stack is full
+int isFull(struct Stack *s) {
+    return s->top == MAX_SIZE - 1;
+}
+
+// Function to check if stack is empty
+int isEmpty(struct Stack *s) {
+    return s->top == -1;
+}
+
+// Function to push element onto stack
+void push(struct Stack *s, int value) {
+    if (isFull(s)) {
+        printf("Stack Overflow\n");
+        return;
+    }
+    s->items[++s->top] = value;
+}
+
+// Function to pop element from stack
+int pop(struct Stack *s) {
+    if (isEmpty(s)) {
+        printf("Stack Underflow\n");
+        return -1;
+    }
+    return s->items[s->top--];
+}
+
+// Function to peek at top element of stack
+int peek(struct Stack *s) {
+    if (isEmpty(s)) {
+        printf("Stack is empty\n");
+        return -1;
+    }
+    return s->items[s->top];
+}
+
+int main() {
+    struct Stack stack;
+    initialize(&stack);
+
+    // Pushing elements onto stack
+    push(&stack, 10);
+    push(&stack, 20);
+    push(&stack, 30);
+
+    // Peeking at top element of stack
+    printf("Top element of stack: %d\n", peek(&stack));
+
+    // Popping elements from stack
+    printf("Popped element: %d\n", pop(&stack));
+    printf("Popped element: %d\n", pop(&stack));
+
+    // Peeking at top element of stack
+    printf("Top element of stack: %d\n", peek(&stack));
+
+    return 0;
+}
