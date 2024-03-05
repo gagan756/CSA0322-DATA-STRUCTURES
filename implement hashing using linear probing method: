@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 10
+
+// Structure for hash table
+typedef struct {
+    int *keys;
+    int *values;
+    int size;
+} HashTable;
+
+// Function prototypes
+HashTable* createHashTable(int size);
+void insert(HashTable *ht, int key, int value);
+int hash(int key, int size);
+void display(HashTable *ht);
+
+int main() {
+    HashTable *hashTable = createHashTable(SIZE);
+
+    // Inserting elements into the hash table
+    insert(hashTable, 10, 100);
+    insert(hashTable, 20, 200);
+    insert(hashTable, 30, 300);
+    insert(hashTable, 21, 210);
+
+    // Displaying the hash table
+    display(hashTable);
+
+    return 0;
+}
+
+// Function to create a new hash table
+HashTable* createHashTable(int size) {
+    HashTable *ht = (HashTable *)malloc(sizeof(HashTable));
+    if (ht == NULL) {
+        printf("Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    ht->size = size;
+    ht->keys = (int *)calloc(size, sizeof(int));
+    ht->values = (int *)calloc(size, sizeof(int));
+    if (ht->keys == NULL || ht->values == NULL) {
+        printf("Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    return ht;
+}
+
+// Function to insert key-value pair into the hash table
+void insert(HashTable *ht, int key, int value) {
+    int index = hash(key, ht->size);
+    while (ht->keys[index] != 0) {
+        // Linear probing
+        index = (index + 1) % ht->size;
+    }
+    ht->keys[index] = key;
+    ht->values[index] = value;
+}
+
+// Hash function (modular hashing)
+int hash(int key, int size) {
+    return key % size;
+}
+
+// Function to display the contents of the hash table
+void display(HashTable *ht) {
+    printf("Hash Table:\n");
+    printf("Index\tKey\tValue\n");
+    for (int i = 0; i < ht->size; i++) {
+        printf("%d\t%d\t%d\n", i, ht->keys[i], ht->values[i]);
+    }
+}
